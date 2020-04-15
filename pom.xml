@@ -63,7 +63,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>2.2.6.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -72,16 +71,16 @@
         </dependency>
 
         <!--  Hibernate validator -->
-        <!--dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency-->
+        </dependency>
 
         <!-- web -->
-        <!--dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency-->
+        </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -115,10 +114,10 @@
         </dependency>
 
         <!-- EhCache -->
-        <!--dependency>
+        <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-        </dependency-->
+        </dependency>
     </dependencies>
 
     <build>
