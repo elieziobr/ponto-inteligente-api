@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 @Entity
 @Table(name = "funcionario")
-public class FuncionarioEntidade implements Serializable {
+public class Funcionario implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -28,10 +28,10 @@ public class FuncionarioEntidade implements Serializable {
     private PerfilEnum perfil;
     private Date dataCriacao;
     private Date dataAtualizacao;
-    private EmpresaEntidade empresa;
-    private List<LancamentoEntidade> lancamentos;
+    private Empresa empresa;
+    private List<Lancamento> lancamentos;
 
-    public FuncionarioEntidade() {
+    public Funcionario() {
     }
 
     @Id
@@ -151,20 +151,20 @@ public class FuncionarioEntidade implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    public EmpresaEntidade getEmpresa() {
+    public Empresa getEmpresa() {
         return empresa;
     }
 
-    public void setEmpresa(EmpresaEntidade empresa) {
+    public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
 
     @OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public List<LancamentoEntidade> getLancamentos() {
+    public List<Lancamento> getLancamentos() {
         return lancamentos;
     }
 
-    public void setLancamentos(List<LancamentoEntidade> lancamentos) {
+    public void setLancamentos(List<Lancamento> lancamentos) {
         this.lancamentos = lancamentos;
     }
 

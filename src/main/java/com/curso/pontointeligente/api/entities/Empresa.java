@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "empresa")
-public class EmpresaEntidade implements Serializable {
+public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,9 +19,9 @@ public class EmpresaEntidade implements Serializable {
     private String cnpj;
     private Date dataCriacao;
     private Date dataAtualizacao;
-    private List<FuncionarioEntidade> funcinarios;
+    private List<Funcionario> funcinarios;
 
-    public EmpresaEntidade() {}
+    public Empresa() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -70,11 +70,11 @@ public class EmpresaEntidade implements Serializable {
     }
 
     @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public List<FuncionarioEntidade> getFuncinarios() {
+    public List<Funcionario> getFuncinarios() {
         return funcinarios;
     }
 
-    public void setFuncinarios(List<FuncionarioEntidade> funcinarios) {
+    public void setFuncinarios(List<Funcionario> funcinarios) {
         this.funcinarios = funcinarios;
     }
 

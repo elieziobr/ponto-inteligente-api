@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "lancamento")
-public class LancamentoEntidade {
+public class Lancamento {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -20,9 +20,9 @@ public class LancamentoEntidade {
     private Date dataCriacao;
     private Date dataAtualizacao;
     private TipoEnum tipo;
-    private FuncionarioEntidade funcionario;
+    private Funcionario funcionario;
 
-    public LancamentoEntidade() {
+    public Lancamento() {
     }
 
     @Id
@@ -92,11 +92,11 @@ public class LancamentoEntidade {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    public FuncionarioEntidade getFuncionario() {
+    public Funcionario getFuncionario() {
         return funcionario;
     }
 
-    public void setFuncionario(FuncionarioEntidade funcionario) {
+    public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
     }
 

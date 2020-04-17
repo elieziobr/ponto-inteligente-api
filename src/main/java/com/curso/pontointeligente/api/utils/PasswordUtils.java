@@ -16,7 +16,7 @@ public class PasswordUtils {
      */
     public static String gerarBCrypt(String senha) {
         if (senha == null) {
-            log.info("Gerando hash com o BCrypt.");
+            log.info("Hash da Senha não foi gerado.");
             return null;
         }
 
