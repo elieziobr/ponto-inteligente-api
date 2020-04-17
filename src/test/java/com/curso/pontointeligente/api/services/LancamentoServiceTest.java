@@ -1,71 +1,60 @@
 package com.curso.pontointeligente.api.services;
 
-import com.curso.pontointeligente.api.entities.Empresa;
-import com.curso.pontointeligente.api.entities.Funcionario;
 import com.curso.pontointeligente.api.entities.Lancamento;
-import com.curso.pontointeligente.api.repositories.EmpresaRepository;
-import com.curso.pontointeligente.api.repositories.FuncionarioRepository;
 import com.curso.pontointeligente.api.repositories.LancamentoRepository;
-import com.curso.pontointeligente.api.utils.GeradorEntidade;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
 
 @SpringBootTest
 @ActiveProfiles("test")
 class LancamentoServiceTest {
 
-    @Autowired
+    @MockBean
     private LancamentoRepository lancamentoRepository;
 
     @Autowired
-    private FuncionarioRepository funcionarioRepository;
-
-    @Autowired
-    private EmpresaRepository empresaRepository;
-
-    private Long funcionarioId;
+    private LancamentoService lancamentoService;
 
     @BeforeEach
     void setUp() {
-        Empresa empresa = empresaRepository.save(GeradorEntidade.obterDadosEmpresa());
-
-        Funcionario funcionario = funcionarioRepository.save(GeradorEntidade.obterDadosFuncionario(empresa));
-
-        funcionarioId = funcionario.getId();
-
-        lancamentoRepository.save(GeradorEntidade.obterDadosLancamentos(funcionario));
-        lancamentoRepository.save(GeradorEntidade.obterDadosLancamentos(funcionario));
-    }
-
-    @AfterEach
-    void tearDown() {
-        empresaRepository.deleteAll();
+        BDDMockito.given(lancamentoRepository.findByFuncionarioId(Mockito.anyLong(), Mockito.any(PageRequest.class))).willReturn(new PageImpl<Lancamento>(new ArrayList<Lancamento>()));
+        BDDMockito.given(lancamentoRepository.findById(Mockito.anyLong())).willReturn(Optional.of(new Lancamento()));
+        BDDMockito.given(lancamentoRepository.save(Mockito.any(Lancamento.class))).willReturn(new Lancamento());
     }
 
     @Test
     void buscarPorFuncionarioId() {
-        List<Lancamento> lancamentos = lancamentoRepository.findByFuncionarioId(funcionarioId);
+        Page<Lancamento> lancamento = lancamentoService.buscarPorFuncionarioId(1L, PageRequest.of(0, 10));
 
-        Assertions.assertEquals(2, lancamentos.size());
+        Assertions.assertNotNull(lancamento);
     }
 
     @Test
     void buscarPorId() {
-        PageRequest page = PageRequest.of(0, 10);
+        Optional<Lancamento> lancamento = lancamentoService.buscarPorId(1L);
 
-        Page<Lancamento> lancamentos = lancamentoRepository.findByFuncionarioId(funcionarioId, page);
+        Assertions.assertTrue(lancamento.isPresent());
+    }
 
-        Assertions.assertEquals(2, lancamentos.getTotalElements());
+    @Test
+    public void testPersistirLancamento() {
+        Lancamento lancamento = lancamentoService.persistir(new Lancamento());
+
+        Assertions.assertNotNull(lancamento);
     }
 }
