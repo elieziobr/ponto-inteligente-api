@@ -52,7 +52,7 @@ class FuncionarioServiceTest {
 
     @Test
     void buscaPorEmail() {
-        Optional<Funcionario> funcionario = funcionarioService.buscaPorEmail(GeradorEntidade.EMAIL);
+        Optional<Funcionario> funcionario = funcionarioService.buscarPorEmail(GeradorEntidade.EMAIL);
 
         Assertions.assertTrue(funcionario.isPresent());
     }
