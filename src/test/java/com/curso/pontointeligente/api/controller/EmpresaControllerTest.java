@@ -21,8 +21,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
@@ -40,16 +38,18 @@ class EmpresaControllerTest {
     private static final String RAZAO_SOCIAL = "Empresa Teste";
 
     @Test
+    @WithMockUser
     void buscarPorCnpjInvalido() throws Exception {
         BDDMockito.given(this.empresaService.buscarPorCnpj(Mockito.anyString())).willReturn(Optional.empty());
 
         mvc.perform(MockMvcRequestBuilders.get(BUSCAR_EMPRESA_CNPJ_URL + CNPJ).accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.errors").value("Empresa não encontrada para o CNPJ "+CNPJ));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.erros").value("Empresa não encontrada para o CNPJ "+CNPJ));
 
     }
 
     @Test
+    @WithMockUser
     void buscarPorCnpjValido() throws Exception {
         BDDMockito.given(this.empresaService.buscarPorCnpj(Mockito.anyString())).willReturn(Optional.of(obterDadosEmpresa()));
 
@@ -59,7 +59,7 @@ class EmpresaControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.id").value(ID))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.razaoSocial", equalTo(RAZAO_SOCIAL)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.cnpj", equalTo(CNPJ)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.errors").isEmpty());
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.erros").isEmpty());
 
     }
 
